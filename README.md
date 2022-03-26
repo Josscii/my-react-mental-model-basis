@@ -46,3 +46,19 @@ React 用 Object.assign 来实现 shallow merge。
 useLayoutEffect 发生在 React 修改 dom 之后，在浏览器渲染之前。这中间一段时间可能被因为一些原因被阻塞。而 useEffect 则发生在浏览器渲染之后。因此如果你在 useEffect 中做一些修改 dom 的操作，可能会出现延迟的现象。
 
 参考链接：[ReactFiberWorkLoop.new.js](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberWorkLoop.new.js)
+
+## 问题6：改变 state 是异步的？还是 batch 的？
+
+之所以是异步的，是因为 react 会把更新任务 schedule 到下一个宏任务。
+
+之所以是 batch 更新的，是因为 react 会把多个更新会合并成一个。
+
+react 18 之前：
+
+如果是在 react 事件回调里面，就是异步且 batch 的。否则，是同步的。
+
+react 18 之后：
+
+无论更新出现在哪里，都是异步且 batch 的。
+
+参考链接：[ReactFiberWorkLoop.new.js#L723](https://github.com/facebook/react/blob/2e0d86d22192ff0b13b71b4ad68fea46bf523ef6/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L723)
