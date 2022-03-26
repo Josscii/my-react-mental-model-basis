@@ -4,7 +4,9 @@
 
 ## 问题1：React 组件什么时候 render ？
 
-当一个组件的 state 改变时，它就会 render。
+对于 function component，当 useState 或者 useReducer 返回的 state 改变时，它会 render。
+
+对于 class component，当调用 setState 且 shouldComponentUpdate 返回 true 或者调用 forceUpdate 时，它会 render。
 
 这时候对于它的子组件：
 
@@ -18,7 +20,9 @@
 
 ## 问题2：React 如何判断 state 改变？
 
-React 用 Object.is() 来确定 state 是否改变。
+对于 function component，React 用 Object.is() 来确定 state 是否改变。
+
+对于 class component，React 不会判断 state 是否改变。
 
 参考链接：[objectIs.js](https://github.com/facebook/react/blob/main/packages/shared/objectIs.js)
 
