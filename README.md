@@ -41,11 +41,13 @@ React 用 Object.assign 来实现 shallow merge。
 
 > useState hook 返回的 set 函数是直接替换。
 
-## 问题5：React 为什么有 useLayoutEffect？
+## 问题5：useLayoutEffect 和 useEffect 有什么区别？
 
-useLayoutEffect 发生在 React 修改 dom 之后，在浏览器渲染之前。这中间一段时间可能被因为一些原因被阻塞。而 useEffect 则发生在浏览器渲染之后。因此如果你在 useEffect 中做一些修改 dom 的操作，可能会出现延迟的现象。
+useLayoutEffect 发生在 React 修改 dom 之后，在当前宏任务里面同步回调的。
 
-参考链接：[ReactFiberWorkLoop.new.js](https://github.com/facebook/react/blob/main/packages/react-reconciler/src/ReactFiberWorkLoop.new.js)
+而 useEffct 的回调则被 schedule 到下一个宏任务里面。
+
+参考链接：[ReactFiberWorkLoop.new.js#L2073](https://github.com/facebook/react/blob/e7d0053e65db49a536440eb24e6c1e4961d976f6/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L2073)
 
 ## 问题6：改变 state 是异步的？还是 batch 的？
 
