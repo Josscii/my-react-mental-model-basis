@@ -45,15 +45,11 @@ React 用 Object.assign 来实现 shallow merge。
 
 useLayoutEffect 发生在 React 修改 dom 之后，在当前宏任务里面同步回调的。
 
-而 useEffct 的回调则被 schedule 到下一个宏任务里面。
+而 useEffct 则是异步的。
 
 参考链接：[ReactFiberWorkLoop.new.js#L2073](https://github.com/facebook/react/blob/e7d0053e65db49a536440eb24e6c1e4961d976f6/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L2073)
 
 ## 问题6：改变 state 是异步的？还是 batch 的？
-
-之所以是异步的，是因为 react 会把更新任务 schedule 到下一个宏任务。
-
-之所以是 batch 更新的，是因为 react 会把多个更新会合并成一个。
 
 react 18 之前：
 
@@ -64,3 +60,5 @@ react 18 之后：
 无论更新出现在哪里，都是异步且 batch 的。
 
 参考链接：[ReactFiberWorkLoop.new.js#L723](https://github.com/facebook/react/blob/2e0d86d22192ff0b13b71b4ad68fea46bf523ef6/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L723)
+
+> 上述两个问题提到的异步都指的是不在当前宏任务里同步执行。具体在何时执行由实现决定，有可能是微任务，也有可能是下一个宏任务。
