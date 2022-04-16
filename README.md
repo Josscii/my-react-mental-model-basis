@@ -4,19 +4,23 @@
 
 ## 问题1：React 组件什么时候 render ？
 
+> 这里的 render 现象就是 render 函数被调用。
+
 对于 function component，当 useState 或者 useReducer 返回的 state 改变时，它会 render。
 
 对于 class component，当调用 setState 且 shouldComponentUpdate 返回 true 或者调用 forceUpdate 时，它会 render。
 
-这时候对于它的子组件：
+这时候对于它的子组件，如果其 props 改变了，那么它就会 render。
 
-如果子组件是 class 类型，那么它是否 render 由 shouldComponentUpdate 决定。
+> 这里的子组件指的是 render 函数返回的内容。
 
-如果子组件是 function 类型，那么它无论如何都会 render。
+因为父组件 render 必定会调用其 render 函数，而 render 函数返回的每次都是通过 React.createElement 来创建的子组件，传入的 props 是新创建的对象，而判断 props 改变用的是 ===，所以 props 一般来说一定是改变的。
 
-如果子组件是 memo 类型，那么会根据 props 是否改变来决定是否 render。
+不过也有下面几种特殊情况：
 
-> 这里的 render 现象就是 render 函数被调用。
+1. 如果子组件是 class 类型，那么它是否 render 由 shouldComponentUpdate 决定。
+2. 如果子组件是 memo 类型，那么会根据 props 是否改变来决定是否 render。
+3. 如果子组件是传入的 children，那么这时候不会 render，因为它没有重新 createElement，自然 props 也没有改变。
 
 ## 问题2：React 如何判断 state 改变？
 
