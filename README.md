@@ -28,13 +28,13 @@
 
 对于 class component，React 不会判断 state 是否改变。
 
-参考链接：[objectIs.js](https://github.com/facebook/react/blob/main/packages/shared/objectIs.js)
+参考链接：[ReactFiberHooks.new.js#L2280](https://github.com/facebook/react/blob/2bf5eba7247a58aeb7ba23b3b5630d8bf6c2c4da/packages/react-reconciler/src/ReactFiberHooks.new.js#L2280)
 
 ## 问题3：React 如何判断 hook 的依赖改变？
 
-React 用 shallowEqual 来判断依赖是否改变。
+React 用 Object.is() 来判断依赖是否改变。
 
-参考链接：[shallowEqual.js](https://github.com/facebook/react/blob/main/packages/shared/shallowEqual.js)
+参考链接：[ReactFiberHooks.new.js#L362](https://github.com/facebook/react/blob/2bf5eba7247a58aeb7ba23b3b5630d8bf6c2c4da/packages/react-reconciler/src/ReactFiberHooks.new.js#L362)
 
 
 ## 问题4：React 在 class 组件中的 setState 的 shallow merge 是什么？
