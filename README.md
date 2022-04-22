@@ -47,9 +47,9 @@ React 用 Object.assign 来实现 shallow merge。
 
 ## 问题5：useLayoutEffect 和 useEffect 有什么区别？
 
-useLayoutEffect 的回调发生在 commit 阶段，React 修改 dom 之后，在当前宏任务里面同步执行。
+useLayoutEffect 的 effect 执行发生在 commit 阶段，React 修改 dom 之后，在当前宏任务里面同步执行。
 
-而 useEffect 的回调则是异步的，被 schedule 到下一个宏任务执行。
+而 useEffect 的回调则是异步的，被 schedule 到下一个宏任务执行，但是有例外，从 React 18 开始，当它是离散的用户输入（如点击）的结果时，或者当它是由 flushSync 包装的更新结果时，是同步执行的。
 
 参考链接：[ReactFiberWorkLoop.new.js#L2073](https://github.com/facebook/react/blob/e7d0053e65db49a536440eb24e6c1e4961d976f6/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L2073)
 
