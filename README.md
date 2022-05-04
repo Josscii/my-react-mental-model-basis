@@ -19,8 +19,10 @@
 不过也有下面几种特殊情况：
 
 1. 如果子组件是 class 类型，那么它是否 render 由 shouldComponentUpdate 决定。
-2. 如果子组件是 memo 类型，那么会根据 props 是否改变来决定是否 render。
+2. 如果子组件是 memo 类型，默认通过 shallowEqual 来判断 props 是否改变来决定是否 render。
 3. 如果子组件是传入的 children，那么这时候不会 render，因为它没有重新 createElement，自然 props 也没有改变。
+
+参考链接：[ReactFiberBeginWork.new.js#L590](https://github.com/facebook/react/blob/ce13860281f833de8a3296b7a3dad9caced102e9/packages/react-reconciler/src/ReactFiberBeginWork.new.js#L590)
 
 ## 问题2：React 如何判断 state 改变？
 
